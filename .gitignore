@@ -1,0 +1,5 @@
+node_modules/
+/frontend/node_modules/
+logs/logfile.log
+coverage/
+cinevid-api-backend/logs/
