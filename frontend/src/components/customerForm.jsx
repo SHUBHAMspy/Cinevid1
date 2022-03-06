@@ -37,9 +37,9 @@ class CustomerForm extends Form {
   // };
   submitIt = async () => {
     // Calling the server for data
-    const { customerId, movieId } = this.props.history.location.state;
+    const { userId, movieId } = this.props.history.location.state;
     console.log(this.state.data);
-    const customer = await addCustomer(this.state.data);
+    const customer = await addCustomer(this.state.data, userId);
     console.log(customer);
 
     await rentMovie(customer.data._id, movieId);

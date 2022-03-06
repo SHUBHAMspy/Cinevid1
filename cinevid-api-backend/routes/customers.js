@@ -3,6 +3,7 @@ const admin = require('../middleware/admin');
 const authorize = require('../middleware/authorize')
 const {Customer,validateRequestObject} = require('../models/customer')
 const express = require('express');
+const { User } = require('../models/user');
 const router = express.Router();
 
 router.get('/', async (req,res) =>{
@@ -21,7 +22,17 @@ router.post('/',authorize,async (req,res) => {
         return
     }
 
+    const user = await User.findById({_id: req.body.userId})
+    if(!user) {    
+        res.status(404).send("The User not found !! Kindly Sign Up")
+        return
+    }
+
     let customer = new Customer({
+        user:{
+            _id:user._id,
+            email:user.email
+        },
         name:req.body.name,
         isGold:req.body.isGold,
         phone:req.body.phone

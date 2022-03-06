@@ -61,7 +61,9 @@ const rental = {
         _id: movie._id,
         title: movie.title,
         dailyRentalRate: movie.dailyRentalRate
-    }
+    },
+    
+    dateOut:Date.now
 }; 
 
 

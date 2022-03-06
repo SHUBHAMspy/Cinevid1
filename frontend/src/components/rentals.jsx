@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { withRouter } from "react-router";
 
 const Rentals = () => {
-  return <h1>Rentals</h1>;
+  const [rentals, setRentals] = useState([]);
+
+  return <div>Rentals</div>;
 };
 
-export default Rentals;
+export default withRouter(Rentals);

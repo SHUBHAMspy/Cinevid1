@@ -2,8 +2,13 @@ import Joi from "joi";
 import React from "react";
 import { withRouter } from "react-router";
 import authenticationService from "../services/authenticationService";
+import {
+  checkCustomer,
+  getIndividualCustomer,
+} from "../services/customerService";
 import { getGenres } from "../services/genreService";
 import { getMovie, saveMovie } from "../services/movieService";
+import { rentMovie } from "../services/rentalService";
 import Form from "./reusables/formComponent";
 
 class MovieForm extends Form {
@@ -86,18 +91,32 @@ class MovieForm extends Form {
 
   rentIt = async () => {
     // Calling the server for data
-    const { _id: customerId } = authenticationService.getCurrentUser();
+    const { _id: userId } = authenticationService.getCurrentUser();
     const movieId = this.props.match.params.id;
     //return () => <CustomerForm movieId={movieId} />;
     // await rentMovie(customerId, movieId);
     // console.log("Form Submitted");
+    console.log(await checkCustomer(userId));
+    if (await checkCustomer(userId)) {
+      const customer = await getIndividualCustomer(userId);
+      console.log(customer);
+      await rentMovie(customer._id, movieId);
+      console.log("Form Submitted");
+      this.props.history.push("/rentals");
+      return;
+    }
+
     this.props.history.push({
       pathname: "/customerform",
       state: {
         movieId,
-        customerId,
+        userId,
       },
     });
+
+    // await rentMovie(customer.data._id, movieId);
+    // console.log("Form Submitted");
+    // this.props.history.push("/rentals");
     // return (
     //   <Redirect
     //     to={{
@@ -123,7 +142,7 @@ class MovieForm extends Form {
           )}
           {this.renderInput("numberInStock", "Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
-          {!user.isAdmin && this.renderButton("Rent It", this.save)}
+          {!user.isAdmin && this.renderButton("Rent It")}
           <div
             style={{
               display: "flex",
@@ -131,8 +150,8 @@ class MovieForm extends Form {
               gap: 10,
             }}
           >
-            {user.isAdmin && this.renderButton("Save", this.save)}
-            {user.isAdmin && this.renderButton("Rent It", this.save)}
+            {user.isAdmin && this.renderButton("Save")}
+            {user.isAdmin && this.renderButton("Rent It")}
           </div>
         </form>
       </div>

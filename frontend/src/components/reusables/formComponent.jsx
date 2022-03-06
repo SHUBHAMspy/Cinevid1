@@ -118,8 +118,9 @@ class Form extends Component {
     );
   };
 
-  renderButton = (label, save = true) => {
-    save = label === "Rent It" || "Rent Now" ? false : true;
+  renderButton = (label) => {
+    //this.save = label === "Rent It" || "Rent Now" ? false : true;
+    console.log(this.save);
 
     return (
       <div>
@@ -129,6 +130,13 @@ class Form extends Component {
           className={
             label === "Rent It" ? "btn btn-success" : "btn btn-primary"
           }
+          onClick={() => {
+            if (label === "Rent It" || label === "Rent Now") {
+              this.save = false;
+            } else {
+              this.save = true;
+            }
+          }}
         >
           {label}
         </button>
