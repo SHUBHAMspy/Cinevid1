@@ -29,7 +29,9 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar user={this.state.user} />
-        <h1>Welcome to CineVid Rental</h1>
+        <h1 style={{ marginLeft: "3rem", marginTop: "10px" }}>
+          Welcome to CineVid Rental
+        </h1>
         <div className="col-lg-8 mx-auto p-3 py-md-5">
           <Switch>
             <ProtectedRoute path="/movies/:id" component={MovieForm} />

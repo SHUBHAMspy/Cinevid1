@@ -93,16 +93,17 @@ class MovieForm extends Form {
     // Calling the server for data
     const { _id: userId } = authenticationService.getCurrentUser();
     const movieId = this.props.match.params.id;
-    //return () => <CustomerForm movieId={movieId} />;
-    // await rentMovie(customerId, movieId);
-    // console.log("Form Submitted");
+
     console.log(await checkCustomer(userId));
     if (await checkCustomer(userId)) {
       const customer = await getIndividualCustomer(userId);
       console.log(customer);
       await rentMovie(customer._id, movieId);
       console.log("Form Submitted");
-      this.props.history.push("/rentals");
+      this.props.history.push({
+        pathname: "/rentals",
+        state: customer,
+      });
       return;
     }
 

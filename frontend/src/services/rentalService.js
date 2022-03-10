@@ -13,3 +13,21 @@ export function rentMovie(customerId, movieId) {
   console.log(body);
   return http.post(apiEndpoint, body);
 }
+
+export function getRentals() {
+  return http.get(apiEndpoint);
+}
+
+export async function getCustomerRentals(customer) {
+  const customerId = customer._id;
+  const { data: rentals } = await getRentals();
+  console.log(rentals);
+  const customerRentals = rentals.filter(
+    ({ customer }) => customer._id === customerId
+  );
+  return customerRentals;
+}
+
+export function deleteRental(rental) {
+  return http.delete(`${apiEndpoint}/${rental._id}`);
+}

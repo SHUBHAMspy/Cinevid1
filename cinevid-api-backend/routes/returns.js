@@ -5,6 +5,7 @@ const authorize = require('../middleware/authorize')
 const validateInput = require('../middleware/validateInput')
 const express = require('express')
 const router = express.Router()
+const moment = require('moment')
 
 // function validate(req,res,next) {
 //     let {error} = validateRequestObject(req.body);
@@ -28,7 +29,7 @@ router.post('/',[authorize,validateInput(validateRequestObject)],async(req,res) 
     //     return
     // }
     
-    const rental = await Rental.lookup(req.body.customerId,req.body.movieId)
+    let rental = await Rental.lookup(req.body.customerId,req.body.movieId)
     if(!rental){
         res.status(404).send('rental is not present')
         return
@@ -46,10 +47,13 @@ router.post('/',[authorize,validateInput(validateRequestObject)],async(req,res) 
     movie.numberInStock = movie.numberInStock + 1
     await movie.save()
 
-    //
-    res.send(rental)
     
-
+    // console.log(rental);
+    // console.log(rental.toObject());
+    rental = rental.toObject();
+    rental.dateReturned = moment(rental.dateReturned).format('DD-MMM-YYYY');
+    res.send(rental);
+    
     //res.status(401).send('unauthorized')
     
 })

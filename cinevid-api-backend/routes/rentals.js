@@ -8,20 +8,35 @@ const Fawn = require('fawn')
 const express = require('express');
 const router = express.Router();
 const config = require('../config/key')
+const moment = require('moment')
+
 
 Fawn.init(config.mongoURI);
 
 router.get('/',async (req,res) =>{
     // Send this request to database
-    const rentals = await Rental.find().sort('-dateOut');
-    res.send(rentals);
+    let rentals = await Rental.find().sort('-dateOut');
+    let newRentals = []
+    rentals.forEach(function (rental) {
+        rental = rental.toObject()
+        rental.dateOut =  moment(rental.dateOut).format('DD-MMM-YYYY')
+        if(rental.dateReturned){
+            rental.dateReturned = moment(rental.dateReturned).format('DD-MMM-YYYY')
+        } 
+        // console.log(rental.dateReturned); 
+        // console.log(rental);
+        newRentals.push(rental)
+
+    })
+    //console.log(newRentals);
+    res.send(newRentals);
 });
-router.get('/:id',async (req,res) =>{
-    // Send this request to database
-    const rentals = await Rental.findOne({'customer._id':req.params.id }).sort('-dateOut');
-    console.log(rentals);
-    res.send(rentals);
-});
+// router.get('/:id',async (req,res) =>{
+//     // Send this request to database
+//     const rentals = await Rental.findOne({'customer._id':req.params.id }).sort('-dateOut');
+//     console.log(rentals);
+//     res.send(rentals);
+// });
 
 router.post('/',authorize,async (req,res) =>{
     // This is for client-side data validation
@@ -62,8 +77,8 @@ const rental = {
         title: movie.title,
         dailyRentalRate: movie.dailyRentalRate
     },
-    
-    dateOut:Date.now
+
+    dateOut:Date.now()
 }; 
 
 
@@ -97,6 +112,19 @@ const rental = {
     // to make it aware and better track the resource which has been created.
     res.send(rental);
     
+});
+
+router.delete('/:id',authorize,async (req,res) =>{
+
+    const rental = await Rental.findByIdAndRemove(req.params.id)
+    // If it is not existing then return 404 staus code-not found message
+    if(!rental) {    
+        res.status(404).send("The Rental you requested was not found")
+        return
+    }
+
+    res.send(rental);
+
 });
 
 module.exports = router;

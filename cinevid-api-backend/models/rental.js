@@ -38,7 +38,7 @@ const rentalSchema = mongoose.Schema({
     },
     dateOut:{
         type:Date,
-        default:Date.now,
+        default:Date.now ,
         required:true
     },
     dateReturned:{
@@ -59,11 +59,18 @@ rentalSchema.statics.lookup = function (customerId,movieId) {
 }
 
 rentalSchema.methods.return = function () {
-    this.dateReturned = new Date()
+    //const date = 
+    //moment.locale()
+    this.dateReturned = new Date();
 
     const rentalDays = moment().diff(this.dateOut,'days')
     this.rentalFee = rentalDays * this.movie.dailyRentalRate
 }
+
+// rentalSchema.methods.calcRentalFeeUptoNow = function(){
+//     const rentalDays = moment().diff(this.dateOut,'days')
+//     this.rentalFee =  rentalDays * this.movie.dailyRentalRate
+// }
 
 const Rental = mongoose.model('Rentals',rentalSchema);
 
