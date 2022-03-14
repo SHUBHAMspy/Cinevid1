@@ -23,7 +23,10 @@ class Pagination extends Component {
               }
               aria-current="page"
             >
-              <span className="page-link" onClick={() => onPageChange(page)}>
+              <span
+                className="page-link clickable"
+                onClick={() => onPageChange(page)}
+              >
                 {page}
               </span>
             </li>

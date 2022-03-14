@@ -38,7 +38,7 @@ class MovieForm extends Form {
 
   async populateMovie() {
     try {
-      console.log(this.props);
+      //console.log(this.props);
       const movieId = this.props.match.params.id;
       if (movieId === "new") {
         return;
@@ -94,10 +94,10 @@ class MovieForm extends Form {
     const { _id: userId } = authenticationService.getCurrentUser();
     const movieId = this.props.match.params.id;
 
-    console.log(await checkCustomer(userId));
+    //console.log(await checkCustomer(userId));
     if (await checkCustomer(userId)) {
       const customer = await getIndividualCustomer(userId);
-      console.log(customer);
+      //console.log(customer);
       await rentMovie(customer._id, movieId);
       console.log("Form Submitted");
       this.props.history.push({
@@ -132,7 +132,7 @@ class MovieForm extends Form {
     const user = authenticationService.getCurrentUser();
     return (
       <div>
-        <h1>Movie Form</h1>
+        <h2>Movie Form</h2>
         <form onSubmit={this.handleFormSubmit}>
           {this.renderInput("title", "Movie Name")}
           {this.renderDropdown(

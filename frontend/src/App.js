@@ -16,7 +16,7 @@ import Register from "./components/registerForm";
 import Rentals from "./components/rentals";
 import ProtectedRoute from "./components/reusables/protectedRoute";
 import authenticationService from "./services/authenticationService";
-
+//col-lg-8 mx-auto p-3 py-md-5
 class App extends Component {
   state = {};
 
@@ -29,10 +29,13 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar user={this.state.user} />
-        <h1 style={{ marginLeft: "3rem", marginTop: "10px" }}>
+        <h1
+          style={{ marginLeft: "3rem", marginTop: "10px", marginRight: "5px" }}
+        >
           Welcome to CineVid Rental
         </h1>
-        <div className="col-lg-8 mx-auto p-3 py-md-5">
+
+        <div className="col-lg-8 mx-auto p-3 py-md-4">
           <Switch>
             <ProtectedRoute path="/movies/:id" component={MovieForm} />
 

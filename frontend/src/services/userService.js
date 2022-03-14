@@ -17,13 +17,13 @@ export function getUserProfile(user) {
 }
 export function updateUser(user) {
   const { _id: userId } = authenticationService.getCurrentUser();
-  console.log(user);
+  //console.log(user);
   const data = {
     name: user.userName,
     email: user.userEmail,
   };
 
   if (user.confirmUserPassword) data.password = user.confirmUserPassword;
-  console.log(data);
+  //console.log(data);
   return http.put(`${apiEndpoint}/${userId}`, data);
 }

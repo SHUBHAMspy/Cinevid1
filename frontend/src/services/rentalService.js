@@ -10,7 +10,7 @@ export function rentMovie(customerId, movieId) {
     customerId,
     movieId,
   };
-  console.log(body);
+  //console.log(body);
   return http.post(apiEndpoint, body);
 }
 
@@ -21,7 +21,7 @@ export function getRentals() {
 export async function getCustomerRentals(customer) {
   const customerId = customer._id;
   const { data: rentals } = await getRentals();
-  console.log(rentals);
+  //console.log(rentals);
   const customerRentals = rentals.filter(
     ({ customer }) => customer._id === customerId
   );

@@ -8,7 +8,7 @@ class TableHeader extends Component {
     const sortColumn = { ...this.props.sortColumn };
 
     if (sortColumn.path === path) {
-      console.log(sortColumn.path, sortColumn.order);
+      //console.log(sortColumn.path, sortColumn.order);
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
     } else {
       sortColumn.path = path;

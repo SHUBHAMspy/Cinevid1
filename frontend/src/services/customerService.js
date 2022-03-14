@@ -14,7 +14,7 @@ export function addCustomer(customer, userId) {
   if (customer.isGold) {
     body.isGold = customer.isGold;
   }
-  console.log(body);
+  //console.log(body);
   return http.post(apiEndpoint, body);
 }
 
@@ -36,4 +36,8 @@ export async function getIndividualCustomer(userId) {
   const customer = customers.find((customer) => customer.user._id === userId);
 
   return customer;
+}
+
+export function deleteCustomer(customer) {
+  return http.delete(`${apiEndpoint}/${customer._id}`);
 }

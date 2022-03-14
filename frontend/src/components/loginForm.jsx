@@ -34,7 +34,7 @@ class LoginForm extends Form {
       console.log("Form Submitted");
 
       const { state } = this.props.location;
-      console.log(state);
+      //console.log(state);
       window.location = state ? state.from.pathname : "/";
     } catch (error) {
       if (error.response && error.response.status === 400) {

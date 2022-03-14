@@ -38,9 +38,9 @@ class CustomerForm extends Form {
   submitIt = async () => {
     // Calling the server for data
     const { userId, movieId } = this.props.history.location.state;
-    console.log(this.state.data);
+    //console.log(this.state.data);
     const customer = await addCustomer(this.state.data, userId);
-    console.log(customer);
+    //console.log(customer);
 
     await rentMovie(customer.data._id, movieId);
     console.log("Form Submitted");
@@ -49,10 +49,11 @@ class CustomerForm extends Form {
 
   render() {
     const user = authenticationService.getCurrentUser();
-    console.log(this.props.history.location.state);
+    //console.log(this.props.history.location.state);
     //console.log(this.props);
     return (
       <>
+        <h3>Hello Customer </h3>
         <form onSubmit={this.handleFormSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phoneNumber", "Phone")}
@@ -62,6 +63,7 @@ class CustomerForm extends Form {
             "Want to be GoldMember",
             this.state.data.isGold
           )}
+
           {user && this.renderButton("Rent Now")}
         </form>
       </>

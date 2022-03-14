@@ -1,69 +1,41 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-
+//import { Link, NavLink } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
 const NavBar = ({ user }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          CineVid
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <NavLink className="nav-link " aria-current="page" to="/movies">
-              Movies
-            </NavLink>
-
+    <Navbar variant="dark" bg="dark" expand="md">
+      <Container>
+        <Navbar.Brand href="/movies">CineVid</Navbar.Brand>
+        <Navbar.Toggle aria-controls="offcanvasNavbar" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/movies">Movies</Nav.Link>
             {user && user.isAdmin && (
-              <NavLink className="nav-link" to="/customers">
-                Customers
-              </NavLink>
+              <Nav.Link href="/customers">Customers</Nav.Link>
             )}
+            {user && <Nav.Link href="/rentals">Rentals</Nav.Link>}
+          </Nav>
 
-            {user && (
-              <NavLink className="nav-link" to="/rentals">
-                Rentals
-              </NavLink>
-            )}
-
+          <Nav>
             {!user && (
               <React.Fragment>
-                <NavLink className="nav-link" to="/loginForm">
-                  Login
-                </NavLink>
+                <Nav.Link href="/loginForm">Login</Nav.Link>
 
-                <NavLink className="nav-link" to="/register">
-                  Register
-                </NavLink>
+                <Nav.Link href="/register">Register</Nav.Link>
               </React.Fragment>
             )}
 
             {user && (
               <React.Fragment>
-                <NavLink className="nav-link" to="/me">
-                  {user.name}
-                </NavLink>
+                <Nav.Link href="/me">{user.name}</Nav.Link>
 
-                <NavLink className="nav-link" to="/logout">
-                  Logout
-                </NavLink>
+                <Nav.Link href="/logout">Logout</Nav.Link>
               </React.Fragment>
             )}
-          </div>
-        </div>
-      </div>
-    </nav>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

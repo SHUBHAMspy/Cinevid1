@@ -51,6 +51,7 @@ router.post('/',[authorize,validateInput(validateRequestObject)],async(req,res) 
     // console.log(rental);
     // console.log(rental.toObject());
     rental = rental.toObject();
+    rental.dateOut = moment(rental.dateOut).format('DD-MMM-YYYY');
     rental.dateReturned = moment(rental.dateReturned).format('DD-MMM-YYYY');
     res.send(rental);
     

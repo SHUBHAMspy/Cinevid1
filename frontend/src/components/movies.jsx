@@ -55,7 +55,7 @@ class Movies extends Component {
   };
 
   handlePageChange = (page) => {
-    console.log(page);
+    //console.log(page);
     this.setState({ currentPage: page });
   };
 
@@ -124,15 +124,15 @@ class Movies extends Component {
 
     const { totalCount, currentPageMovies } = this.displayData();
     return (
-      <div className="row">
-        <div className="col-2">
+      <div className="row text2-responsive">
+        <div className="col col-sm-2">
           <Filter
             items={this.state.generes}
             selectedItem={this.state.selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
         </div>
-        <div className="col">
+        <div className="col my-3">
           {user && user.isAdmin && (
             <Link
               to="/movies/new"
